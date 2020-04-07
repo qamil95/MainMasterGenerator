@@ -27,7 +27,7 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
       # Artifact name
-        name: SonglistGenerator $GITHUB_RUN_NUMBER
+        name: SonglistGenerator ${{GITHUB_RUN_NUMBER}}
       # Directory containing files to upload
         path: SonglistGenerator/bin/Release/netcoreapp3.1/SonglistGenerator.dll
       
