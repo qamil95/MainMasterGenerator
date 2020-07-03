@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text.RegularExpressions;
 
 namespace SonglistGenerator
@@ -23,6 +22,16 @@ namespace SonglistGenerator
             this.songFileContent = File.ReadAllLines(this.Path);
 
             var titleLine = this.songFileContent.Single(x => x.StartsWith("\\tytul"));
+
+            if (titleLine.Count(x => (x =='{')) != 3)
+            {
+                // Title section is split into separate lines
+                var mergedContent = string.Join("", this.songFileContent);
+                var from = mergedContent.IndexOf("\\tytul") + "\\tytul".Length;
+                var to = mergedContent.IndexOf("\\begin");
+                titleLine = mergedContent[from..to];
+            }
+
             var splitTitleLine = Regex.Matches(titleLine, "\\{(.*?)\\}");
 
             this.Title = splitTitleLine[0].Value;
