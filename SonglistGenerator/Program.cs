@@ -6,9 +6,9 @@ namespace SonglistGenerator
     class Program
     {
         const string latexFileExtension = ".tex";
-        const string chapterMasterFile = "master" + latexFileExtension;
-        const string songbookMainFile = "main" + latexFileExtension;
-        const string latexFileFilter = "*" + latexFileExtension;
+        public const string chapterMasterFile = "master" + latexFileExtension;
+        public const string songbookMainFile = "main" + latexFileExtension;
+        public const string latexFileFilter = "*" + latexFileExtension;
 
         static void Main(string[] args)
         {            
@@ -30,11 +30,15 @@ namespace SonglistGenerator
 
                 var chapter = new Chapter(folder);
                 chapters.Add(chapter);
-                logger.WriteLine($"Created new chapter from folder {chapter.FolderName}");
             }
             logger.WriteLine($"Found {chapters.Count} chapters.");
-            
-             
+
+            foreach (var chapter in chapters)
+            {
+                chapter.Initialize();
+                logger.WriteLine($"   Chapter \"{chapter.ChapterName}\" is located in folder \"{chapter.FolderName}\", UseArtists: {chapter.UseArtists}");
+            }
+                         
             foreach (var chapter in chapters)
             {
                 var latexFilesInsideChapter = Directory.GetFiles(chapter.Path, latexFileFilter);

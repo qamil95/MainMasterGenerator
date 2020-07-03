@@ -1,14 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SonglistGenerator
 {
     class Chapter : IDiskLocationRepresentation
     {
+        string masterFileContent;
+
         public Chapter(string folder)
         {
-            this.Path = folder;
-            this.FolderName = new DirectoryInfo(folder).Name;
+            this.Path = folder;            
+        }
+
+        public void Initialize()
+        {            
+            this.FolderName = new DirectoryInfo(this.Path).Name;
+            this.masterFileContent = File.ReadAllText(System.IO.Path.Combine(this.Path, Program.chapterMasterFile));
+            this.ChapterName = Regex.Match(masterFileContent, @"(?<=\\chapter{).*?(?=})").Value;
+            this.UseArtists = masterFileContent.Contains("\\Zespoltrue") && masterFileContent.Contains("\\Zespolfalse");
         }
 
         public string Path { get; private set; }
@@ -16,11 +26,17 @@ namespace SonglistGenerator
         /// <summary>
         /// Defines whether \Zespoltrue and \Zespolfalse sections are added to master.tex.
         /// </summary>
-        public bool UseArtists { get; }
+        public bool UseArtists { get; private set; }
 
-        public string FolderName { get; }
+        /// <summary>
+        /// Name of subfolder which contains master.tex file.
+        /// </summary>
+        public string FolderName { get; private set; }
 
-        public string ChapterName { get; }
+        /// <summary>
+        /// Name of chapter read from master.tex file.
+        /// </summary>
+        public string ChapterName { get; private set; }
 
         public List<Song> Songs { get; } = new List<Song>();
     }
