@@ -20,7 +20,7 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore $GITHUB_WORKSPACE/songlistRepoSubfolder/SonglistGenerator.csproj
+      run: dotnet restore $GITHUB_WORKSPACE/songlistRepoSubfolder/SonglistGenerator/SonglistGenerator.csproj
     - name: Build
       run: dotnet build $GITHUB_WORKSPACE/songlistRepoSubfolder/SonglistGenerator.sln --configuration Release --no-restore
     - name: Checkout spiewnik
