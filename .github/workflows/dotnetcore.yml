@@ -14,8 +14,8 @@ jobs:
     env:
       SONGLIST_REPO_FOLDER:  songlistRepoSubfolder
       SPIEWNIK_REPO_FOLDER:  spiewnikRepoSubfolder
-      SONGLIST_REPO_PATH:  $GITHUB_WORKSPACE/songlistRepoSubfolder
-      SPIEWNIK_REPO_PATH:  $GITHUB_WORKSPACE/spiewnikRepoSubfolder
+      SONGLIST_REPO_PATH:  ${{env.GITHUB_WORKSPACE}}/${{env.SONGLIST_REPO_FOLDER}}
+      SPIEWNIK_REPO_PATH:  ${{env.GITHUB_WORKSPACE}/${{env.SPIEWNIK_REPO_FOLDER}}
 
     steps:
     - name: Chechout Songlist repository
