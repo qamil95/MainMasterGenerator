@@ -11,17 +11,11 @@ jobs:
 
     runs-on: ubuntu-latest
     
-    env:
-      SONGLIST_REPO_FOLDER:  songlistRepoSubfolder
-      SPIEWNIK_REPO_FOLDER:  spiewnikRepoSubfolder
-      SONGLIST_REPO_PATH:  $GITHUB_WORKSPACE/$SONGLIST_REPO_FOLDER
-      SPIEWNIK_REPO_PATH:  $GITHUB_WORKSPACE/$SPIEWNIK_REPO_FOLDER
-
     steps:
     - name: Chechout Songlist repository
       uses: actions/checkout@v2.3.1
       with:
-        path: $SONGLIST_REPO_FOLDER
+        path: songlistRepoSubfolder
     
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
@@ -29,19 +23,19 @@ jobs:
         dotnet-version: 3.1.101
     
     - name: Install dependencies
-      run: dotnet restore $SONGLIST_REPO_PATH/SonglistGenerator/SonglistGenerator.csproj
+      run: dotnet restore $GITHUB_WORKSPACE/songlistRepoSubfolder/SonglistGenerator/SonglistGenerator.csproj
     
     - name: Build
-      run: dotnet build $SONGLIST_REPO_PATH/SonglistGenerator.sln --configuration Release --no-restore
+      run: dotnet build $GITHUB_WORKSPACE/songlistRepoSubfolder/SonglistGenerator.sln --configuration Release --no-restore
    
     - name: Checkout spiewnik repository
       uses: actions/checkout@v2.3.1
       with:
         repository: qamil95/spiewnik
-        path: $SPIEWNIK_REPO_FOLDER
+        path: spiewnikRepoSubfolder
     
     - name: Run SonglistGenerator
-      run: dotnet  $SONGLIST_REPO_PATH/SonglistGenerator/bin/Release/netcoreapp3.1/SonglistGenerator.dll $SPIEWNIK_REPO_PATH/main
+      run: dotnet  $GITHUB_WORKSPACE/songlistRepoSubfolder/SonglistGenerator/bin/Release/netcoreapp3.1/SonglistGenerator.dll $GITHUB_WORKSPACE/spiewnikRepoSubfolder/main
     
     - name: Upload SonglistGenerator.dll
       uses: actions/upload-artifact@v1.0.0
