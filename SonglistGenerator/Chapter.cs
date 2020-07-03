@@ -15,10 +15,10 @@ namespace SonglistGenerator
 
         public void Initialize()
         {            
-            this.FolderName = new DirectoryInfo(this.Path).Name;
             this.masterFileContent = File.ReadAllText(System.IO.Path.Combine(this.Path, Program.chapterMasterFile));
-            this.ChapterName = Regex.Match(masterFileContent, @"(?<=\\chapter{).*?(?=})").Value;
             this.UseArtists = masterFileContent.Contains("\\Zespoltrue") && masterFileContent.Contains("\\Zespolfalse");
+            this.FolderName = new DirectoryInfo(this.Path).Name;
+            this.ChapterName = Regex.Match(masterFileContent, @"(?<=\\chapter{).*?(?=})").Value;
         }
 
         public string Path { get; private set; }

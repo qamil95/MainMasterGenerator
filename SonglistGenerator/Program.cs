@@ -32,31 +32,36 @@ namespace SonglistGenerator
                 chapters.Add(chapter);
             }
             logger.WriteLine($"Found {chapters.Count} chapters.");
-
-            foreach (var chapter in chapters)
-            {
-                chapter.Initialize();
-                logger.WriteLine($"   Chapter \"{chapter.ChapterName}\" is located in folder \"{chapter.FolderName}\", UseArtists: {chapter.UseArtists}");
-            }
                          
             foreach (var chapter in chapters)
             {
                 var latexFilesInsideChapter = Directory.GetFiles(chapter.Path, latexFileFilter);
 
-                foreach (var latexFile in latexFilesInsideChapter)
+                foreach (var latexFilePath in latexFilesInsideChapter)
                 {
-                    if (Path.GetFileName(latexFile) == chapterMasterFile)
+                    if (Path.GetFileName(latexFilePath) == chapterMasterFile)
                     {
                         // Ignore chapter master file
                         continue;
                     }
 
-                    var song = new Song(latexFile);
+                    var song = new Song(latexFilePath);
                     chapter.Songs.Add(song);
                 }
 
                 logger.WriteLine($"Found {chapter.Songs.Count} songs in chapter {chapter.FolderName}");
-            }            
+            }
+
+            foreach (var chapter in chapters)
+            {
+                chapter.Initialize();
+                logger.WriteLine($"   Chapter \"{chapter.ChapterName}\" is located in folder \"{chapter.FolderName}\", UseArtists: {chapter.UseArtists}");
+                foreach (var song in chapter.Songs)
+                {
+                    song.Initialize();
+                    logger.WriteLine($"      Song");
+                }
+            }
         }
     }
 }
