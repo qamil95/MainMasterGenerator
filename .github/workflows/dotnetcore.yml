@@ -24,7 +24,7 @@ jobs:
     - name: Checkout spiewnik
       uses: actions/checkout@v2.3.1
       with:
-        repository: https://github.com/qamil95/spiewnik.git
+        repository: qamil95/spiewnik
     - name: Run SonglistGenerator without parameters
       run: dotnet  $GITHUB_WORKSPACE/SonglistGenerator/bin/Release/netcoreapp3.1/SonglistGenerator.dll
     - name: Upload artifact
