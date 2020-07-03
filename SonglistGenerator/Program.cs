@@ -59,7 +59,7 @@ namespace SonglistGenerator
                 foreach (var song in chapter.Songs)
                 {
                     song.Initialize();
-                    logger.WriteLine($"      Song");
+                    logger.WriteLine($"      Song \"{song.Title}\", author \"{song.Author}\", artist \"{song.Artist}\"");
                 }
             }
         }
