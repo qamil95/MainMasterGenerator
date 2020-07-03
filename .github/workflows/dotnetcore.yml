@@ -1,9 +1,4 @@
 name: .NET Core
-env:
-  SONGLIST_REPO_SUBFOLDER:  songlistGeneratorRepo
-  SPIEWNIK_REPO_SUBFOLDER:  spiewnikRepo
-  SONGLIST_REPO:  $GITHUB_WORKSPACE/songlistGeneratorRepo
-  SPIEWNIK_REPO: $GITHUB_WORKSPACE/spiewnikRepo
 
 on:
   push:
@@ -19,27 +14,27 @@ jobs:
     steps:
     - uses: actions/checkout@v2.3.1
       with:
-        path: $SONGLIST_REPO_SUBFOLDER
+        path: songlistRepoSubfolder
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore $GITHUB_WORKSPACE/songlistGeneratorRepo/SonglistGenerator/SonglistGenerator.csproj
+      run: dotnet restore $GITHUB_WORKSPACE/songlistRepoSubfolder/SonglistGenerator.csproj
     - name: Build
-      run: dotnet build $SONGLIST_REPO/SonglistGenerator.sln --configuration Release --no-restore
+      run: dotnet build $GITHUB_WORKSPACE/songlistRepoSubfolder/SonglistGenerator.sln --configuration Release --no-restore
     - name: Checkout spiewnik
       uses: actions/checkout@v2.3.1
       with:
         repository: qamil95/spiewnik
-        path: $SPIEWNIK_REPO_SUBFOLDER
+        path: spiewnikRepoSubfolder
     - name: Run SonglistGenerator without parameters
-      run: dotnet  $SONGLIST_REPO/SonglistGenerator/bin/Release/netcoreapp3.1/SonglistGenerator.dll
+      run: dotnet  $GITHUB_WORKSPACE/songlistRepoSubfolder/SonglistGenerator/bin/Release/netcoreapp3.1/SonglistGenerator.dll
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
       # Artifact name
         name: SonglistGenerator r${{github.run_number}}
       # Directory containing files to upload
-        path: $SONGLIST_REPO_SUBFOLDER/SonglistGenerator/bin/Release/netcoreapp3.1/SonglistGenerator.dll
+        path: $GITHUB_WORKSPACE/songlistRepoSubfolder/SonglistGenerator/bin/Release/netcoreapp3.1/SonglistGenerator.dll
       
