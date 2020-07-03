@@ -25,7 +25,7 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore $SONGLIST_REPO
+      run: dotnet restore $SONGLIST_REPO_SUBFOLDER
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Checkout spiewnik
