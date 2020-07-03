@@ -28,8 +28,8 @@ jobs:
       with:
         repository: qamil95/spiewnik
         path: spiewnikRepoSubfolder
-    - name: Run SonglistGenerator without parameters
-      run: dotnet  $GITHUB_WORKSPACE/songlistRepoSubfolder/SonglistGenerator/bin/Release/netcoreapp3.1/SonglistGenerator.dll
+    - name: Run SonglistGenerator
+      run: dotnet  $GITHUB_WORKSPACE/songlistRepoSubfolder/SonglistGenerator/bin/Release/netcoreapp3.1/SonglistGenerator.dll $GITHUB_WORKSPACE/spiewnikRepoSubfolder/main
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
