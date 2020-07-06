@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace SonglistGenerator
 {
@@ -12,7 +14,6 @@ namespace SonglistGenerator
         {
             this.logger = logger;
         }
-
 
         public int NumberOfChapters => chapters.Count;
 
@@ -55,6 +56,18 @@ namespace SonglistGenerator
                     logger.WriteLine($"      Song \"{song.Title}\", author \"{song.Author}\", artist \"{song.Artist}\"");
                 }
             }
+        }
+
+        public string NewMainFile()
+        {
+            var listOfChapters = new List<string>();
+            var orderedChapters = chapters.OrderBy(x => x.ChapterName);
+            foreach (var chapter in orderedChapters)
+            {
+                listOfChapters.Add($"\\include{{{chapter.FolderName}/master}}");
+            }
+
+            return string.Join(Environment.NewLine, listOfChapters);
         }
     }
 }

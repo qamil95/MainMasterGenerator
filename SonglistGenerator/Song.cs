@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -42,11 +41,6 @@ namespace SonglistGenerator
         public string Path { get; private set; }
 
         /// <summary>
-        /// Filename with chapter folder, this string is used in master.tex file
-        /// </summary>
-        string FilePath { get; }
-
-        /// <summary>
         /// Song title, first {} in \tytul section.
         /// </summary>
         public string Title { get; private set; }
@@ -66,15 +60,15 @@ namespace SonglistGenerator
         /// <summary>
         /// First line of song, to use in alphabetical table of content.
         /// </summary>
-        string FirstLine { get; }
+        //string FirstLine { get; }
 
         /// <summary>
         /// First line of chorus, to use in alphabetical table of content.
         /// </summary>
-        string FirstLineOfChorus { get; }
+        //string FirstLineOfChorus { get; }
 
-        List<string> Text { get; }
+        //List<string> Text { get; }
 
-        List<string> Chords { get; }
+        //List<string> Chords { get; }
     }
 }

@@ -35,6 +35,9 @@ namespace SonglistGenerator
 
             songlist.ReadAllSongs();
             songlist.Initialize();
+
+            logger.WriteLine("----- NEW MAIN.TEX -----");
+            logger.WriteLine(songlist.NewMainFile());
         }
     }
 }
