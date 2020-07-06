@@ -15,7 +15,7 @@ namespace SonglistGenerator
 
         public void Initialize()
         {            
-            this.masterFileContent = File.ReadAllText(System.IO.Path.Combine(this.Path, Program.chapterMasterFile));
+            this.masterFileContent = File.ReadAllText(System.IO.Path.Combine(this.Path, Program.ChapterMasterFile));
             this.UseArtists = masterFileContent.Contains("\\Zespoltrue") && masterFileContent.Contains("\\Zespolfalse");
             this.FolderName = new DirectoryInfo(this.Path).Name;
             this.ChapterName = Regex.Match(masterFileContent, @"(?<=\\chapter{).*?(?=})").Value;
