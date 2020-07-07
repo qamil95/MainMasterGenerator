@@ -51,5 +51,5 @@ jobs:
       # Artifact name
         name: MainMasters r${{github.run_number}}
       # Directory containing files to upload
-        path: $GITHUB_WORKSPACE/output.zip
+        path: output.zip
       
