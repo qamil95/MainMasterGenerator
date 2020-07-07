@@ -18,6 +18,9 @@ namespace SonglistGenerator
             var songRepositoryFolder = args[0];
             logger.WriteLine($"Program will generate list of songs from {songRepositoryFolder}");
 
+            var outputPath = args[1];
+            logger.WriteLine($"Zip file with new main and master files would be saved at {outputPath}");
+
             var folders = Directory.GetDirectories(songRepositoryFolder);
             foreach (var folder in folders)
             {
@@ -33,11 +36,9 @@ namespace SonglistGenerator
 
             logger.WriteLine($"Found {songlist.NumberOfChapters} chapters.");
 
-            songlist.ReadAllSongs();
+            songlist.CreateListOfSongs();
             songlist.Initialize();
-
-            logger.WriteLine("----- NEW MAIN.TEX -----");
-            logger.WriteLine(songlist.NewMainFile());
+            songlist.CreateNewMasterMainFiles(outputPath);
         }
     }
 }

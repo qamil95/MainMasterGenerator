@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SonglistGenerator
@@ -39,5 +41,29 @@ namespace SonglistGenerator
         public string ChapterName { get; private set; }
 
         public List<Song> Songs { get; } = new List<Song>();
+
+        public string NewMasterFile()
+        {
+            var listOfSongs = new List<string>();
+            listOfSongs.Add($"\\chapter{{{this.ChapterName}}}");
+
+            if (this.UseArtists)
+            {
+                listOfSongs.Add("\\Zespoltrue");
+            }
+
+            var orderedSongs = Songs.OrderBy(x => x.Title);
+            foreach (var song in orderedSongs)
+            {
+                listOfSongs.Add($"\\input{{{this.FolderName}/{System.IO.Path.GetFileName(song.Path)}}}");
+            }
+
+            if (this.UseArtists)
+            {
+                listOfSongs.Add("\\Zespolfalse");
+            }
+
+            return string.Join(Environment.NewLine, listOfSongs);
+        }
     }
 }

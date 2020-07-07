@@ -22,7 +22,7 @@ namespace SonglistGenerator
             chapters.Add(chapter);
         }
 
-        internal void ReadAllSongs()
+        internal void CreateListOfSongs()
         {
             foreach (var chapter in chapters)
             {
@@ -58,7 +58,7 @@ namespace SonglistGenerator
             }
         }
 
-        public string NewMainFile()
+        private string NewMainFile()
         {
             var listOfChapters = new List<string>();
             var orderedChapters = chapters.OrderBy(x => x.ChapterName);
@@ -68,6 +68,18 @@ namespace SonglistGenerator
             }
 
             return string.Join(Environment.NewLine, listOfChapters);
+        }
+
+        internal void CreateNewMasterMainFiles(string outputPath)
+        {
+            var fileCreator = new MainMasterFileCreator();
+            fileCreator.AddMainFile(this.NewMainFile());
+            foreach (var chapter in this.chapters)
+            {
+                fileCreator.AddMasterFile(chapter.FolderName, chapter.NewMasterFile());
+            }
+
+            fileCreator.SaveZipArchive(outputPath);
         }
     }
 }
